@@ -7,8 +7,8 @@ import CourseCard from './CourseCard'
 const tabName=[
     "Free",
     "New to coding",
-    "Most Popular",
-    "Skill paths",
+    "Most popular",
+    "Skills paths",
     "Career paths"
 ]
 
@@ -28,7 +28,7 @@ const setMyCard=(value)=>{
 
 
   return (
-    <div>
+    <div className=''>
         <div className='text-4xl font-semibold text-center'>
             Unlock the 
             <HighlightText text={"Power of code"}/>
@@ -54,21 +54,21 @@ const setMyCard=(value)=>{
           );
         })}
       </div>
-      <div className="hidden lg:block lg:h-[200px]"></div>
+      <div className="hidden lg:block  lg:h-[100px]"></div>
 
             {/* course car group */}
-      <div>
+      <div className="lg:absolute gap-10 lg:w-11/12 justify-center lg:gap-0 flex lg:justify-between flex-wrap w-full lg:bottom-[0] lg:left-[50%] lg:translate-x-[-40%] lg:translate-y-[80%] text-black lg:mb-0 mb-7 lg:px-0 px-2">
 
         {
             courses.map((item,index)=>{
 
                 return(
-                    <CourseCard key={index}
-                    CardData={item}
-                    currentCard={currentCard}
-                    setCurrentCard={setCurrentCard}
-
-                    />
+                  <CourseCard
+              key={index}
+              cardData={item}
+              currentCard={currentCard}
+              setCurrentCard={setCurrentCard}
+            />
                 )
             })
         }
