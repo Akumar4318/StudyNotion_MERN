@@ -9,6 +9,8 @@ import TimelineSection from "../Components/core/HomePage/TimelineSection";
 import LearningLanguageSection from "../Components/core/HomePage/LearningLanguageSection";
 import InstructorSection from "../Components/core/HomePage/InstructorSection";
 import Footer from "../Components/common/Footer";
+import ExploreMore from "../Components/core/HomePage/ExploreMore";
+
 // import "../App.css"
 
 const Home = () => {
@@ -97,6 +99,8 @@ const Home = () => {
             }
             codeColor={"text-yellow-25"}
           />
+
+         
         </div>
 
         {/* Code-Section -02 */}
@@ -130,6 +134,7 @@ const Home = () => {
             }
           />
         </div>
+        <ExploreMore/>
       </div>
 
       {/* - Section-2 */}
