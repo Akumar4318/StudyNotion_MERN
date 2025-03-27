@@ -37,7 +37,7 @@ exports.resetPasswordToken=async(req,res)=>{
       },{new:true})
       //? create url 
   
-      const url=`http//:localhost:3000//update-passowrd/${token}`
+      const url = `http://localhost:5173/update-password/${token}`;
       //? send mail containing the url 
 
       console.log("updateDetials",updatedDetails)
