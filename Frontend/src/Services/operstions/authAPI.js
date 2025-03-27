@@ -33,7 +33,7 @@ export function getPasswordResetToken(email,setEmailSent){
             toast.success("Reset Email sent")
             setEmailSent(true)
         } catch (error) {
-            console.log("RESET PASSOWRD TOKEN ERROR");
+            console.log("RESET PASSWORD TOKEN ERROR");
             console.log(error)
             toast.error("Failed to send email for resetting the passowrd")
         }
@@ -42,7 +42,7 @@ export function getPasswordResetToken(email,setEmailSent){
 }
 
 
-export function resetPassword(token,confirmPassword,password){
+export function resetPassword(password, confirmPassword, token){
 
     return async(dispatch)=>{
 
@@ -52,7 +52,7 @@ export function resetPassword(token,confirmPassword,password){
             const response=await apiConnector("POST",RESETPASSWORD_API,{password,confirmPassword,token});
             console.log("RESET PASSOWRD RESPONSE ...",response);
 
-            if(!response.data.sucess){
+            if(!response.data.success){
                 throw new Error (response.data.message);
 
             }

@@ -13,7 +13,7 @@ const UpdatePassword = () => {
     confirmPassword: "",
   });
   const [showPassword, setShowPasswod] = useState(false);
-  const [showConfirmPassword, setShowConfirmPasswod] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { password, confirmPassword } = formData;
 
@@ -22,7 +22,7 @@ const UpdatePassword = () => {
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
-      [e.target.value]: e.target.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -50,9 +50,9 @@ const UpdatePassword = () => {
                 type={showPassword ? "text" : "password"}
                 required
                 name="password"
-                value={"password"}
+                value={password}
                 onChange={handleOnChange}
-                placeholder="Password"  className="form-style w-full !pr-10"
+                placeholder="New Password"  className="form-style w-full !pr-10"
               />
               <span  className="absolute right-3 top-[38px] z-[10] cursor-pointer"
                 onClick={() => {
@@ -70,14 +70,14 @@ const UpdatePassword = () => {
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 required
-                name="password"
-                value={"password"}
+                name="confirmPassword"
+                value={confirmPassword}
                 onChange={handleOnChange}
                 placeholder="Confirm New password" className="form-style w-full !pr-10"
               />
               <span className="absolute right-3 top-[38px] z-[10] cursor-pointer"
                 onClick={() => {
-                  setShowConfirmPasswod(!showConfirmPassword); 
+                    setShowConfirmPassword(!showConfirmPassword); 
                 }}
               >
                 {showConfirmPassword ? (
