@@ -81,17 +81,37 @@ try {
     
     //? fetch all details from body
 
-    const {firstName,lastName,email,password,confirmPassword,accountType,contactNumber,otp}=req.body 
+    const {  firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      accountType,
+      contactNumber,
+      otp,}=req.body 
 
     //? validate karo ki sab hai ki nhi
-
-    if(!firstName || !lastName || !email || !password || !confirmPassword || !otp){
-
-        return res.status(403).json({
-            success:false,
-            message:"All fields are required"
-        })
-    } 
+console.log(firstName,
+  lastName,
+  email,
+  password,
+  confirmPassword,
+  accountType,
+  
+  otp)
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !otp
+    ) {
+      return res.status(403).send({
+        success: false,
+        message: "All Fields are required",
+      })
+    }
 
     //?check  both password are same or not
 
@@ -115,7 +135,7 @@ try {
 
     //? if there is new user then find the most recent otp from db
 
-    const recentOTP=await OTP.findOne({email}).sort({createdAt:-1}).limit(1);
+    const recentOTP= await OTP.findOne({email}).sort({createdAt:-1}).limit(1);
 
    console.log(recentOTP)
 
@@ -141,6 +161,9 @@ try {
 
     let hashedPassword=await bcrypt.hash(password,10)
 
+    let approved = ""
+    approved === "Instructor" ? (approved = false) : (approved = true)
+
     //? create entry  in db
 
     const profileDetails=await Profile.create({
@@ -155,8 +178,9 @@ try {
         lastName,
         email,
         password:hashedPassword,
-        accountType,
+        accountType:accountType,
         additionalDetails:profileDetails._id,
+        approved:approved,
         image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
     })
 

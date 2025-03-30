@@ -8,11 +8,13 @@ import Login from "./Pages/Login";
 import ForgotPassword from "./Pages/ForgotPassword";
 import OpenRoute from "./Components/core/Auth/OpenRoute";
 import UpdatePassword from "./Pages/UpdatePassword";
+import VerifyEmail from "./Pages/VerifyEmail";
 
 const App = () => {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
+     
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="catalog/:catalogName"></Route>
@@ -34,19 +36,32 @@ const App = () => {
             </OpenRoute>
           }
         ></Route>
-        <Route path="/forgot-password" element={
-          
-          <OpenRoute>
-             <ForgotPassword />
+        <Route
+          path="/forgot-password"
+          element={
+            <OpenRoute>
+              <ForgotPassword />
             </OpenRoute>
-         }></Route>
+          }
+        ></Route>
 
-<Route path="/update-password/:id" element={
-          
-          <OpenRoute>
-             <UpdatePassword/>
+        <Route
+          path="/update-password/:id"
+          element={
+            <OpenRoute>
+              <UpdatePassword />
             </OpenRoute>
-         }></Route>
+          }
+        ></Route>
+
+        <Route
+          path="/verify-email"
+          element={
+            <OpenRoute>
+               <VerifyEmail/>
+            </OpenRoute>
+          }
+        />
       </Routes>
     </div>
   );

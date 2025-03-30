@@ -25,7 +25,8 @@ const Navbar = () => {
         try {
             
             const result= await apiConnector("GET",categories.CATEGORIES_API)
-            console.log(result.data.data)
+            
+            console.log(result)
             setSubLinks(result.data.data)
 
          

@@ -37,7 +37,7 @@ exports.resetPasswordToken=async(req,res)=>{
       },{new:true})
       //? create url 
   
-      const url = `http://localhost:5173/update-password/${token}`;
+      const url = `http://localhost:3000/update-password/${token}`;
       //? send mail containing the url 
 
       console.log("updateDetials",updatedDetails)
@@ -123,7 +123,7 @@ exports.resetPassword=async(req,res)=>{
         })
     } catch (error) {
         
-        return res.status(500).json({
+         res.status(400).json({
             success:false,
             message:"Somthing went wrong while sending  the reset password",
             message:error.message

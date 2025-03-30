@@ -4,10 +4,12 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
-// import { sendOtp } from "../../../services/operations/authAPI"
-// import { setSignupData } from "../../../slices/authSlice"
+
+import {setSignupData} from '../../../Slice/authSlice'
+
 import { ACCOUNT_TYPE } from "../../../utils/constants"
 import Tab from "../../common/Tab"
+import { sendOtp } from "../../../Services/operstions/authAPI"
 
 function SignupForm() {
   const navigate = useNavigate()
@@ -28,6 +30,7 @@ function SignupForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const { firstName, lastName, email, password, confirmPassword } = formData
+  console.log(formData)
 
   // Handle input fields, when some value changes
   const handleOnChange = (e) => {
