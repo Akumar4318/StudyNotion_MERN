@@ -25,3 +25,8 @@ export const settingsEndpoints={
 
     CHANGEPASSWORD_API:BASE_URL+'/auth/changepassword'
 }
+
+//LINK -  CONTACT-US API
+export const contactusEndpoint = {
+    CONTACT_US_API: BASE_URL + "/reach/contact",
+  }

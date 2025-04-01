@@ -9,6 +9,7 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import OpenRoute from "./Components/core/Auth/OpenRoute";
 import UpdatePassword from "./Pages/UpdatePassword";
 import VerifyEmail from "./Pages/VerifyEmail";
+import About from "./Pages/About";
 
 const App = () => {
   return (
@@ -59,6 +60,15 @@ const App = () => {
           element={
             <OpenRoute>
                <VerifyEmail/>
+            </OpenRoute>
+          }
+        />
+
+<Route
+          path="/about"
+          element={
+            <OpenRoute>
+             <About/>
             </OpenRoute>
           }
         />
