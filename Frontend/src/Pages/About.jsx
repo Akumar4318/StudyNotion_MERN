@@ -122,7 +122,7 @@ const About = () => {
 
       {/* section 07 */}
 
-    </div>
+    </div >
     
 <Footer/>
     </div>

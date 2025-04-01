@@ -3,7 +3,7 @@ import ContactUsForm from '../../ContactPage/ContactUsForm'
 
 const ContactFormSection = () => {
   return (
-    <div  className="mx-auto ">
+    <div  className="mx-auto mb-5 ">
         <h1 className="text-center text-4xl font-semibold">
             Get in Touch
         </h1>

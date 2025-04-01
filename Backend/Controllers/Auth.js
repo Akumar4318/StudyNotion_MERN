@@ -91,14 +91,7 @@ try {
       otp,}=req.body 
 
     //? validate karo ki sab hai ki nhi
-console.log(firstName,
-  lastName,
-  email,
-  password,
-  confirmPassword,
-  accountType,
-  
-  otp)
+
     if (
       !firstName ||
       !lastName ||

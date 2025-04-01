@@ -10,6 +10,10 @@ import OpenRoute from "./Components/core/Auth/OpenRoute";
 import UpdatePassword from "./Pages/UpdatePassword";
 import VerifyEmail from "./Pages/VerifyEmail";
 import About from "./Pages/About";
+import MyProfile from "./Components/core/Dashboard/MyProfile";
+import PrivateRoute from "./Components/Auth/PrivateRoute";
+import DashBoard from "./Pages/DashBoard";
+
 
 const App = () => {
   return (
@@ -24,7 +28,7 @@ const App = () => {
           path="/signup"
           element={
             <OpenRoute>
-              <Signup />
+              <Signup/>
             </OpenRoute>
           }
         ></Route>
@@ -72,6 +76,18 @@ const App = () => {
             </OpenRoute>
           }
         />
+      <Route
+      
+      element={
+<PrivateRoute>
+  <DashBoard/>
+</PrivateRoute>
+      }
+      >
+ <Route  path="/dashboard/my-profile" element={<MyProfile/>} />
+      </Route>
+
+       
       </Routes>
     </div>
   );
