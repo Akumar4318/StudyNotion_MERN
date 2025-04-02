@@ -14,7 +14,7 @@ const{createSection,updateSection,deleteSection}=require('../Controllers/Section
 
 //Sub-section controllers
 
-const{createsubSection}=require('../Controllers/subSections')
+const{createsubSection,updateSubSection,deleteSubSection}=require('../Controllers/subSections')
 
 
 // Rating controllers 
@@ -53,8 +53,10 @@ router.post('/deletesection',auth,isInstructor,deleteSection)
 router.post('/addsubsection',auth,isInstructor,createsubSection)
 
 //NOTE - delete a sub-section
-//NOTE - update a sub-section
+router.delete('/deletesubsection',auth,isInstructor,deleteSubSection)
 
+//NOTE - update a sub-section
+router.post('/updatesubsection',auth,isInstructor,updateSubSection)
 
 // get all registered Course
 router.get('/getallcourses',showAllCourses)
@@ -63,13 +65,12 @@ router.get('/getallcourses',showAllCourses)
 router.post('/getcoursedetails',getCourseDetails)
 
 // get details for a specific courses
+
 // router.post('/getfullcousedetails',auth,getFullCourseDetails)
 
 //edit course 
 //NOTE - get all courses under a specific instuructor
 //NOTE - delete course
-
-
 
 //NOTE - update course Progress
 
