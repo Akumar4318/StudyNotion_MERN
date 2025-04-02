@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCourseDetails, editCourseDetails, fetchCourseCategories } from "../../../../../Services/operstions/courseDetailsAPI";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import ChipInput from "./ChipInput";
-// import Upload from "./Upload";
+import Upload from "./Upload";
 import RequirementsField from "./RequirementsField";
 import IconBtn from "../../../../common/IconBtn";
 import {toast } from 'react-hot-toast'
@@ -246,14 +246,14 @@ const CourseInformationForm = () => {
       />
 
       {/* UploadComponent */}
-      {/* <Upload
+      <Upload
         name="courseImage"
         label="Course Thumbnail"
         register={register}
         setValue={setValue}
         errors={errors}
         editData={editCourse ? course?.thumbnail : null}
-      /> */}
+      />
 {/* Benefits of the course */}
       <div className="flex flex-col space-y-2">
         <label  className="text-sm text-richblack-5" htmlFor="courseBenefits">

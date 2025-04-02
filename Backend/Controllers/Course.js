@@ -20,7 +20,7 @@ exports.createCourse=async(req,res)=>{
 
         //? get thumbnail
 
-        // const thumbnail=req.files.thumbnailImage;
+        const thumbnail=req.files.thumbnailImage;
 
         //? validation 
         if(!courseName || !courseDescription || !whatYouWillLearn|| !tag || !price || !category){
@@ -59,7 +59,7 @@ exports.createCourse=async(req,res)=>{
 
         //? upload image top cloudinary
 
-        // const thumbnailImage=await uploadImageToCloudinary(thumbnail,process.env.FOLDER_NAME)
+        const thumbnailImage=await uploadImageToCloudinary(thumbnail,process.env.FOLDER_NAME)
 
 
         // create an entry for new course
@@ -71,7 +71,7 @@ exports.createCourse=async(req,res)=>{
             whatYouWillLearn,
             tag:categoryDetails.id,
             price,
-            // thumbnail:thumbnailImage.secure_url,
+            thumbnail:thumbnailImage.secure_url,
         })
 
         //? update the user and add the new course to schema of instructor
