@@ -9,11 +9,11 @@ exports.updateProfile=async(req,res)=>{
         
         // ? get data 
 
-        const{firstName,lastName,gender="",dateOfBirth="",about="",contactNumber=""}=req.body 
+        const{firstName,lastName,gender="",dateofBirth="",about="",contactNumber=""}=req.body 
         //? userId
         const id=req.user.id;
         //? validation
-        if(!gender || !contactNumber || !about || !contactNumber){
+        if(!gender || !contactNumber || !about || !contactNumber || !dateofBirth){
 
             return res.status(400).json({
                 success:"false",
@@ -26,7 +26,7 @@ exports.updateProfile=async(req,res)=>{
         const ProfileId=userDetails.additionalDetails
         const profileDetails=await Profile.findById(ProfileId)
         //? update
-        profileDetails.dateOfBirth=dateOfBirth;
+        profileDetails.dateofBirth=dateofBirth;
         profileDetails.about=about;
         profileDetails.gender=gender;
         profileDetails.contactNumber=contactNumber;

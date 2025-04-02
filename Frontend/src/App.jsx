@@ -13,6 +13,7 @@ import About from "./Pages/About";
 import MyProfile from "./Components/core/Dashboard/MyProfile";
 import PrivateRoute from "./Components/Auth/PrivateRoute";
 import DashBoard from "./Pages/DashBoard";
+import EnrolledCourses from "./Components/core/Dashboard/EnrolledCourses";
 
 
 const App = () => {
@@ -85,6 +86,7 @@ const App = () => {
       }
       >
  <Route  path="/dashboard/my-profile" element={<MyProfile/>} />
+ <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
       </Route>
 
        

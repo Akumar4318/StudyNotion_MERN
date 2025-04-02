@@ -20,6 +20,9 @@ const{createsubSection}=require('../Controllers/subSections')
 // Rating controllers 
 const{createRating,getAvgRating,getAllrating}=require('../Controllers/RatingAndReview')
 
+// CourseProgress Controllers
+const{updateCourseProgress}=require('../Controllers/CourseProgress')
+
 // Importing Middlewares
 
 const{auth,isStudent,isInstructor,isAdmin}=require('../Middleware/auth')
