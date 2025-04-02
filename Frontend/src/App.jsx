@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
 import "./App.css";
 import Navbar from "./Components/common/Navbar";
@@ -14,9 +14,16 @@ import MyProfile from "./Components/core/Dashboard/MyProfile";
 import PrivateRoute from "./Components/Auth/PrivateRoute";
 import DashBoard from "./Pages/DashBoard";
 import EnrolledCourses from "./Components/core/Dashboard/EnrolledCourses";
+import Cart from "./Components/core/Dashboard/Cart";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+
 
 
 const App = () => {
+  const {user}=useSelector((state)=>state.profile)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
@@ -86,7 +93,18 @@ const App = () => {
       }
       >
  <Route  path="/dashboard/my-profile" element={<MyProfile/>} />
- <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+
+
+
+ {
+  user?.accountType ===ACCOUNT_TYPE.STUDENT && (
+    <>
+     <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
+     <Route path="dashboard/cart" element={<Cart/>}/>
+    </>
+  )
+ }
+
       </Route>
 
        
