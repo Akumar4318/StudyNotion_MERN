@@ -3,7 +3,10 @@ const Course=require('../Models/Course')
 const Category=require('../Models/Category')
 const User=require('../Models/User')
 const {uploadImageToCloudinary}=require("../utils/imageUploader")
+const SubSection = require('../Models/SubSection')
+const Section = require('../Models/Section')
 require('dotenv').config()
+
 
 
 /// createCourse handler function
@@ -14,8 +17,9 @@ exports.createCourse=async(req,res)=>{
     try {
         
         //? fetch data from body
+        
 
-        const{courseName,courseDescription,whatYouWillLearn,price,tag,category}=req.body;
+        const{courseName,courseDescription,whatYouWillLearn,price,tag,category, instructions}=req.body;
      
 
         //? get thumbnail
@@ -35,7 +39,9 @@ exports.createCourse=async(req,res)=>{
 
         const userId=req.user.id;
         
-        const instructorDetails=await User.findById(userId)
+        const instructorDetails=await User.findById(userId,{
+            accountType: "Instructor",
+        })
         console.log(instructorDetails)
         
         if(!instructorDetails){
@@ -46,9 +52,9 @@ exports.createCourse=async(req,res)=>{
         }
 
         //? check given tag is  valid or not 
-        console.log("aman",category)
+       
         const categoryDetails=await Category.findById(category)
-        console.log(categoryDetails)
+     
 
         if(!categoryDetails){
             return res.status(400).json({
@@ -67,11 +73,13 @@ exports.createCourse=async(req,res)=>{
         const newCourse=await Course.create({
             courseName,
             courseDescription,
-            instructor:instructorDetails,
-            whatYouWillLearn,
-            tag:categoryDetails.id,
+            instructor:instructorDetails._id,
+            whatYouWillLearn:whatYouWillLearn,
+            tag:tag,
             price,
+            category: categoryDetails._id,
             thumbnail:thumbnailImage.secure_url,
+            instructions: instructions,
         })
 
         //? update the user and add the new course to schema of instructor
@@ -85,7 +93,16 @@ exports.createCourse=async(req,res)=>{
             }
         },
         {new:true}
-    )
+    );
+    await Category.findByIdAndUpdate(
+        { _id: category },
+        {
+            $push: {
+                course: newCourse._id,
+            },
+        },
+        { new: true }
+    );
 
     // update the tag ka schema ?
 
@@ -192,3 +209,56 @@ exports.getCourseDetails=async(req,res)=>{
         })
     }
 }
+
+
+// delete a course
+exports.deleteCourse = async (req, res) => {
+    try {
+      const { courseId } = req.body
+  
+      // Find the course
+      const course = await Course.findById(courseId)
+      if (!course) {
+        return res.status(404).json({ message: "Course not found" })
+      }
+  
+      // Unenroll students from the course
+      const studentsEnrolled = course.studentsEnroled
+      for (const studentId of studentsEnrolled) {
+        await User.findByIdAndUpdate(studentId, {
+          $pull: { courses: courseId },
+        })
+      }
+  
+      // Delete sections and sub-sections
+      const courseSections = course.courseContent
+      for (const sectionId of courseSections) {
+        // Delete sub-sections of the section
+        const section = await Section.findById(sectionId)
+        if (section) {
+          const subSections = section.subSection
+          for (const subSectionId of subSections) {
+            await SubSection.findByIdAndDelete(subSectionId)
+          }
+        }
+  
+        // Delete the section
+        await Section.findByIdAndDelete(sectionId)
+      }
+  
+      // Delete the course
+      await Course.findByIdAndDelete(courseId)
+  
+      return res.status(200).json({
+        success: true,
+        message: "Course deleted successfully",
+      })
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json({
+        success: false,
+        message: "Server error",
+        error: error.message,
+      })
+    }
+  }

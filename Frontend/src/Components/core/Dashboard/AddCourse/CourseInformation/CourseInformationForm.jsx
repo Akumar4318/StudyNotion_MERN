@@ -47,7 +47,7 @@ const CourseInformationForm = () => {
       setValue("coursePrice", course.price);
       setValue("courseTags", course.tag);
       setValue("courseBenefits", course.whatYouWillLearn);
-      setValue("courseCategory", course.instructions);
+      setValue("courseCategory", course.category);
       setValue("courseImage", course.thumbnail);
     }
 
@@ -149,6 +149,7 @@ const CourseInformationForm = () => {
 
 
     const result = await addCourseDetails(formData, token)
+    console.log("aman",result)
     if (result) {
       dispatch(setStep(2))
       dispatch(setCourse(result))
@@ -266,7 +267,7 @@ const CourseInformationForm = () => {
           {...register("courseBenefits", { required: true })}
         ></textarea>
 
-        {errors.courseBenifits && (
+        {errors.courseBenefits && (
           <span className="ml-2 text-xs tracking-wide text-pink-200">Benefits of the Course are required</span>
         )}
       </div>

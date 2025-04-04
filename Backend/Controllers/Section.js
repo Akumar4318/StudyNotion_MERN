@@ -1,5 +1,7 @@
 const Section=require('../Models/Section')
-const Course=require('../Models/Course')
+const Course=require('../Models/Course');
+
+
 
 
 exports.createSection=async(req,res)=>{
@@ -27,10 +29,18 @@ exports.createSection=async(req,res)=>{
                                             courseId,{
                                                 $push:{
                                                     courseContent:newSection._id,
-                                                }
+                                                },
                                             },
-                                            {new:true},
-         ) // how to use populate section and subsection
+                                            {new:true}
+         )
+         .populate({
+            path: "courseContent",
+            populate: {
+                path: "subSection",
+            },
+        })
+        .exec(); 
+         // how to use populate section and subsection
 
 
          return res.status(200).json({

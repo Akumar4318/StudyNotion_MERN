@@ -26,7 +26,7 @@ const courseSchema=new mongoose.Schema({
    courseContent:[{
     type:mongoose.Schema.Types.ObjectId,
     ref:"Section",
-    required:true,
+
    }],
    ratingAndReview:[{
     type:mongoose.Schema.Types.ObjectId,
