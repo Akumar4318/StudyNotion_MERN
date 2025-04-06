@@ -56,6 +56,8 @@ const CourseInformationForm = () => {
 
   const isFormUpdated = () => {
     const currentValues = getValues();
+  
+
 
     if (
       currentValues.courseTitle !== course.courseName ||
@@ -63,11 +65,12 @@ const CourseInformationForm = () => {
       currentValues.coursePrice !== course.price ||
       currentValues.courseTags.toString() !== course.tag.toString() ||
       currentValues.courseBenefits !== course.whatYouWillLearn ||
-      currentValues.courseCategory._id !== course.category._id ||
+      // currentValues.courseCategory.id !== course.category._id  ||
       currentValues.courseRequirements.toString() !==
         course.instructions.toString() ||
       currentValues.courseImage !== course.thumbnail
     ) {
+      
       return true;
     } else {
       return false;
@@ -78,7 +81,7 @@ const CourseInformationForm = () => {
   // handles next button click
 
   const onSubmit = async (data) => {
-    console.log(data)
+  
 
     if(editCourse){
       if(isFormUpdated()){
@@ -101,9 +104,9 @@ const CourseInformationForm = () => {
           if (currentValues.courseBenefits !== course.whatYouWillLearn) {
             formData.append("whatYouWillLearn", data.courseBenefits)
           }
-          if (currentValues.courseCategory._id !== course.category._id) {
-            formData.append("category", data.courseCategory)
-          }
+          // if (currentValues.courseCategory._id !== course.category._id) {
+          //   formData.append("category", data.courseCategory)
+          // }
           if (
             currentValues.courseRequirements.toString() !==
             course.instructions.toString()
@@ -121,6 +124,7 @@ const CourseInformationForm = () => {
           setLoading(true);
           const result=await editCourseDetails(formData,token)
           setLoading(false);
+        
 
           if(result){
            dispatch(setStep(2)) ;
@@ -146,11 +150,14 @@ const CourseInformationForm = () => {
     formData.append("instructions", JSON.stringify(data.courseRequirements))
     formData.append("thumbnailImage", data.courseImage)
     setLoading(true)
-
+    console.log(formData)
 
     const result = await addCourseDetails(formData, token)
+    console.log(result)
+   
 
     if (result) {
+      
       dispatch(setStep(2))
       dispatch(setCourse(result))
     }
@@ -220,7 +227,7 @@ const CourseInformationForm = () => {
           defaultValue=""
           {...register("courseCategory", { required: true })}
         >
-          <option value="" disabled>
+          <option value="" disabled >
             Choose a Category
           </option>
 
@@ -228,6 +235,7 @@ const CourseInformationForm = () => {
             courseCategories.map((category, index) => (
               <option key={index} value={category?._id}>
                 {category?.name}
+                
               </option>
             ))}
         </select>

@@ -87,8 +87,8 @@ const NestedView = ({ handleChangeEditSectionName }) => {
             </summary>
 
             <div className="px-6 pb-4">
-              {section?.subSection?.map((data) => (
-                <div key={data?.id}
+              {section?.subSection?.map((data,index) => (
+                <div key={index}
                   className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2"
                   onClick={() => setViewSubSection(data)}
                 >

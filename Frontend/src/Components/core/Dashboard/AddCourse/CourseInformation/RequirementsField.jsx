@@ -16,6 +16,7 @@ const RequirementsField = ({
 
   useEffect(() => {
     if (editCourse) {
+      
       setRequirementList(course?.instructions);
     }
     register(name, { required: true, validate: (value) => value.length > 0 });

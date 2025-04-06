@@ -68,9 +68,10 @@ router.post('/getcoursedetails',getCourseDetails)
 router.post("/editCourse", auth, isInstructor, editCourse)
 // Get all Courses Under a Specific Instructor
 
-// get details for a specific courses
 
-// router.post('/getfullcousedetails',auth,getFullCourseDetails)
+
+// Get Details for a Specific Courses
+router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 
 //edit course 
 //NOTE - get all courses under a specific instuructor

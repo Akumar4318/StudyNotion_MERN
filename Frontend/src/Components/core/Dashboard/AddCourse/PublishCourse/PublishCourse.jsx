@@ -31,7 +31,7 @@ const PublishCourse = () => {
   
     const goToCourses = () => {
       dispatch(resetCourseState())
-      navigate("/dashboard/my-profile")
+      navigate("/dashboard/my-courses")
     }
   
     const handleCoursePublish = async () => {

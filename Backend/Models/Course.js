@@ -43,20 +43,20 @@ const courseSchema=new mongoose.Schema({
     trim:true,
     
    },
-   Category:{
+   category:{
       type:mongoose.Schema.Types.ObjectId,
-      ref:"Category"
+      ref:"category"
    }, 
    tag:{
     type:[String],
     required:true,
    },
-   studenEnrolled:[{
+   studentEnrolled:[{
     type:mongoose.Schema.Types.ObjectId,
     ref:"User",
     required:true,
    }],
-   indturctions:{
+   instructions:{
       type:[String]
    },
    status:{

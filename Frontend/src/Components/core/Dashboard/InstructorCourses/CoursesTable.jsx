@@ -32,7 +32,13 @@ const CoursesTable = ({ courses, setCourses }) => {
     await deleteCourse({ courseId: courseId }, token);
     const result = await fetchInstructorCourses(token);
     if (result) {
-      setCourse(result);
+        setCourse(result)
+        console.log(  setCourse(result))
+        dispatch(setCourse(result))
+      
+    //   dispatch(setCourse(result))
+      navigate('/dashboard/my-courses')
+      
     }
 
     setConfirmationModal(null);
@@ -118,7 +124,7 @@ const CoursesTable = ({ courses, setCourses }) => {
                 <button
                   disabled={loading}
                   onClick={() => {
-                    // navigate(/dashboard/edit-course/${course._id})
+                    navigate(`/dashboard/edit-course/${course._id}`)
                   }}
                   title="Edit"
                   className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"
