@@ -27,14 +27,14 @@ const CourseBuilderForm = () => {
 
   const [editSectionName, setEditSectionName] = useState(null);
   const { course } = useSelector((state) => state.course);
-  console.log(course.courseContent)
+
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
 
 
   const handleChangeEditSectionName = (sectionId, sectionName) => {
-    console.log(sectionId,sectionName)
+    
     if (editSectionName === sectionId) {
       cancelEdit();
       return ;
@@ -53,6 +53,7 @@ const CourseBuilderForm = () => {
     dispatch(setEditCourse(true));
   };
   const goToNext = () => {
+  
     if (course.courseContent.length === 0) {
       toast.error("Please add atleaset one Section");
       return;
@@ -61,12 +62,13 @@ const CourseBuilderForm = () => {
       course.courseContent.some((section) => section.subSection.length === 0)
     ) {
       toast.error("please add atleast one lecture  in each section");
+      return;
     }
     dispatch(setStep(3));
   };
 
   const onSubmit = async (data) => {
-    console.log(data)
+ 
     setLoading(true);
     let result;
     if (editSectionName) {
@@ -88,7 +90,7 @@ const CourseBuilderForm = () => {
       );
     }
     // value update
-    console.log(result)
+
 
    
 

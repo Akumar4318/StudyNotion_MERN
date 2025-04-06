@@ -18,109 +18,92 @@ import Cart from "./Components/core/Dashboard/Cart";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import AddCourse from "./Components/core/Dashboard/AddCourse";
+import MyCourses from "./Components/core/Dashboard/MyCourses";
 
 
 
-const App = () => {
-  const {user}=useSelector((state)=>state.profile)
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
+
+function App() {
+  const { user } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
-     
+
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="catalog/:catalogName"></Route>
 
         <Route
           path="/signup"
-          element={
-            <OpenRoute>
-              <Signup/>
-            </OpenRoute>
-          }
+          element={<OpenRoute>
+            <Signup />
+          </OpenRoute>}
         ></Route>
 
         <Route
           path="/login"
-          element={
-            <OpenRoute>
-              <Login />
-            </OpenRoute>
-          }
+          element={<OpenRoute>
+            <Login />
+          </OpenRoute>}
         ></Route>
         <Route
           path="/forgot-password"
-          element={
-            <OpenRoute>
-              <ForgotPassword />
-            </OpenRoute>
-          }
+          element={<OpenRoute>
+            <ForgotPassword />
+          </OpenRoute>}
         ></Route>
 
         <Route
           path="/update-password/:id"
-          element={
-            <OpenRoute>
-              <UpdatePassword />
-            </OpenRoute>
-          }
+          element={<OpenRoute>
+            <UpdatePassword />
+          </OpenRoute>}
         ></Route>
 
         <Route
           path="/verify-email"
-          element={
-            <OpenRoute>
-               <VerifyEmail/>
-            </OpenRoute>
-          }
-        />
+          element={<OpenRoute>
+            <VerifyEmail />
+          </OpenRoute>} />
 
-<Route
+        <Route
           path="/about"
-          element={
-            <OpenRoute>
-             <About/>
-            </OpenRoute>
-          }
-        />
-      <Route
-      
-      element={
-<PrivateRoute>
-  <DashBoard/>
-</PrivateRoute>
-      }
-      >
- <Route  path="/dashboard/my-profile" element={<MyProfile/>} />
+          element={<OpenRoute>
+            <About />
+          </OpenRoute>} />
+        <Route
+
+          element={<PrivateRoute>
+            <DashBoard />
+          </PrivateRoute>}
+        >
+          <Route path="/dashboard/my-profile" element={<MyProfile />} />
 
 
 
- {
-  user?.accountType ===ACCOUNT_TYPE.STUDENT && (
-    <>
-     <Route path="dashboard/enrolled-courses" element={<EnrolledCourses/>}/>
-     <Route path="dashboard/cart" element={<Cart/>}/>
-    </>
-  )
- }
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+              <Route path="dashboard/cart" element={<Cart />} />
+            </>
+          )}
 
- {
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route path="dashboard/add-course" element={<AddCourse />} />
+              <Route path="dashboard/my-courses" element={<MyCourses />} />
 
-  user?.accountType ===ACCOUNT_TYPE.INSTRUCTOR && (
-    <>
-    <Route path="dashboard/add-course" element={<AddCourse/>}/>
-    </>
-  )
- }
+            </>
+          )}
 
-      </Route>
+        </Route>
 
-       
+
       </Routes>
     </div>
   );
-};
+}
 
 export default App;

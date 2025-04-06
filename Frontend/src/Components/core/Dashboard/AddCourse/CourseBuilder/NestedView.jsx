@@ -23,10 +23,9 @@ const NestedView = ({ handleChangeEditSectionName }) => {
   const handleDeleteSection = async (sectionId) => {
     const result = await deleteSection({
       sectionId,
-      courseid: course._id,
+      courseId: course._id,
       token,
     });
-    
 
     if (result) {
         dispatch(setCourse(result));
@@ -57,12 +56,13 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                 <RxDropdownMenu className="text-2xl text-richblack-50" />
                 <p className="font-semibold text-richblack-50">
                   {section.sectionName}
+                 
                 </p>
               </div>
               <div className="flex items-center gap-x-3">
                 <button
                   onClick={() =>
-                    handleChangeEditSectionName(section.id, section.sectionName)
+                    handleChangeEditSectionName(section._id, section.sectionName)
                   }
                 >
                   <MdEdit className="text-xl text-richblack-300" />
@@ -87,7 +87,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
             </summary>
 
             <div className="px-6 pb-4">
-              {section.subSection.map((data) => (
+              {section?.subSection?.map((data) => (
                 <div key={data?.id}
                   className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2"
                   onClick={() => setViewSubSection(data)}
@@ -103,6 +103,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                     className="flex items-center gap-x-3"
                   >
                     <button
+                  
                       onClick={() =>
                         setEditSubSection({ ...data, sectionId: section._id })
                       }
@@ -115,7 +116,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                         setConfirmationModal({
                           text1: "Delete the SubSection",
                           text2: "This lecture will be deleted",
-                          btn1: "Delete",
+                          btn1Text: "Delete",
                           btn2Text: "Cancel",
                           btn1Handler: () =>
                             handleDeleteSubSection(data._id, section._id),

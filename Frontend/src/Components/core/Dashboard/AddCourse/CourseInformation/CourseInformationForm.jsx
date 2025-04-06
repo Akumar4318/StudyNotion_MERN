@@ -149,7 +149,7 @@ const CourseInformationForm = () => {
 
 
     const result = await addCourseDetails(formData, token)
-    console.log("aman",result)
+
     if (result) {
       dispatch(setStep(2))
       dispatch(setCourse(result))

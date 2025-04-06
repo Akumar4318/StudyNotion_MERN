@@ -14,7 +14,7 @@ const{createSection,updateSection,deleteSection}=require('../Controllers/Section
 
 //Sub-section controllers
 
-const{createsubSection,updateSubSection,deleteSubSection}=require('../Controllers/SubSection')
+const{createsubSection,updateSubSection, deleteSubSection,}=require('../Controllers/SubSection')
 
 
 // Rating controllers 
@@ -22,6 +22,7 @@ const{createRating,getAvgRating,getAllrating}=require('../Controllers/RatingAndR
 
 // CourseProgress Controllers
 const{updateCourseProgress}=require('../Controllers/CourseProgress')
+
 
 // Importing Middlewares
 
@@ -64,12 +65,17 @@ router.get('/getallcourses',showAllCourses)
 // get details for a specific courses
 router.post('/getcoursedetails',getCourseDetails)
 
+router.post("/editCourse", auth, isInstructor, editCourse)
+// Get all Courses Under a Specific Instructor
+
 // get details for a specific courses
 
 // router.post('/getfullcousedetails',auth,getFullCourseDetails)
 
 //edit course 
 //NOTE - get all courses under a specific instuructor
+
+router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 
 //NOTE - delete course
 

@@ -1,5 +1,6 @@
 const Section=require('../Models/Section')
 const Course=require('../Models/Course');
+const SubSection = require('../Models/SubSection');
 
 
 
@@ -11,6 +12,7 @@ exports.createSection=async(req,res)=>{
         // data fetch
 
         const {sectionName,courseId}=req.body ;
+      
          //? data validation
 
          if(!sectionName || !courseId){
@@ -45,7 +47,7 @@ exports.createSection=async(req,res)=>{
 
          return res.status(200).json({
             success:true,
-            message:"Course update Successfully",
+            message:"Section created Successfully",
             data:updateCourseDetails
          })
 
@@ -66,7 +68,9 @@ exports.updateSection=async(req,res)=>{
     try {
         
         //?  data input
-        const {sectionName,sectionId}=req.body 
+        const {sectionName,sectionId,courseId}=req.body 
+console.log(sectionName,sectionId,courseId)
+      
         //? data validation
         if(!sectionName || !sectionId){
             return res.status(400).json({
@@ -75,12 +79,19 @@ exports.updateSection=async(req,res)=>{
             })
          }
           //? update data
-         const section=await Section.findByIdAndUpdate(sectionId,{sectionName},{new:true})
+          const section=await Section.findByIdAndUpdate(sectionId,{sectionName},{new:true})
             //? return res
+            const course=await Course.findById(courseId).populate({
+                path:"courseContent",
+                populate:{
+                    path:"subSection"
+                }
+            }).exec()
               
             return res.status(200).json({
                 success:true,
-                message:"section updated successfully"
+                message:"section updated successfully",
+                data:course
             })
 
     } catch (error) {
@@ -98,19 +109,44 @@ exports.deleteSection=async(req,res)=>{
 
     try {
         
-        //? get id -- assuming that we are sending ID in params
+        //? get id -- assuming that we are sending ID in body
 
-        const {sectionId}=req.params
-        //? use findby id and delete
+        const {sectionId,courseId}=req.body
+        console.log("aman",sectionId,courseId)
+        await Course.findByIdAndUpdate(courseId, {
+			$pull: {
+				courseContent: sectionId,
+			}
+		})
+		const section = await Section.findById(sectionId);
+		console.log(sectionId, courseId);
+		if(!section) {
+			return res.status(404).json({
+				success:false,
+				message:"Section not Found",
+			})
+		}
 
-        await Section.findByIdAndDelete(sectionId)
-        //? return res
+		//delete sub section
+        await SubSection.deleteMany({_id: {$in: section.subSection}});
 
-        return res.status(200).json({
-            success:true,
-            message:"Section Deleted Successfully"
 
-        })
+        await Section.findByIdAndDelete(sectionId);
+
+		//find the updated course and return 
+		const course = await Course.findById(courseId).populate({
+			path:"courseContent",
+			populate: {
+				path: "subSection"
+			}
+		})
+		.exec();
+       
+        res.status(200).json({
+			success:true,
+			message:"Section deleted",
+			data:course
+		});
          
     } catch (error) {
         return res.status(500).json({

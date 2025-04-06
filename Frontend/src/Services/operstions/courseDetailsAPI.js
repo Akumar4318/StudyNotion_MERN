@@ -133,7 +133,7 @@ export const editCourseDetails = async (data, token) => {
 
 // create a section
 export const createSection = async (data, token) => {
-  console.log("api connector ",data)
+ 
   let result = null
   const toastId = toast.loading("Loading...")
   try {
@@ -181,6 +181,7 @@ export const updateSection = async (data, token) => {
 
 // delete a section
 export const deleteSection = async (data, token) => {
+
   let result = null
   const toastId = toast.loading("Loading...")
   try {
@@ -198,11 +199,13 @@ export const deleteSection = async (data, token) => {
     toast.error(error.message)
   }
   toast.dismiss(toastId)
+
   return result
 }
 
 // create a subsection
 export const createSubSection = async (data, token) => {
+  console.log(data)
   let result = null
   const toastId = toast.loading("Loading...")
   try {
@@ -248,9 +251,10 @@ export const updateSubSection = async (data, token) => {
 // delete a subsection
 export const deleteSubSection = async (data, token) => {
   let result = null
+
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", DELETE_SUBSECTION_API, data, {
+    const response = await apiConnector("DELETE", DELETE_SUBSECTION_API, data, {
       Authorization: `Bearer ${token}`,
     })
     console.log("DELETE SUB-SECTION API RESPONSE............", response)

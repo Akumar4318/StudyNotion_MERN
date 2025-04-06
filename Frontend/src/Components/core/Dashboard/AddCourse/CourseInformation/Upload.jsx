@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react"
-import { useDropzone } from "react-dropzone"
-import { FiUploadCloud } from "react-icons/fi"
-import { useSelector } from "react-redux"
+import { useEffect, useRef, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { FiUploadCloud } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import ReactPlayer from "react-player";
 
 export default function Upload({
   name,
@@ -13,54 +14,60 @@ export default function Upload({
   viewData = null,
   editData = null,
 }) {
-  const { course } = useSelector((state) => state.course)
-  const [selectedFile, setSelectedFile] = useState(null)
+  const { course } = useSelector((state) => state.course);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [previewSource, setPreviewSource] = useState(
     viewData ? viewData : editData ? editData : ""
-  )
-  const inputRef = useRef(null)
+  );
+  const inputRef = useRef(null);
 
   const onDrop = (acceptedFiles) => {
-    const file = acceptedFiles[0]
+    const file = acceptedFiles[0];
     if (file) {
-      previewFile(file)
-      setSelectedFile(file)
+      previewFile(file);
+      setSelectedFile(file);
     }
-  }
+  };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: !video
       ? { "image/*": [".jpeg", ".jpg", ".png"] }
       : { "video/*": [".mp4"] },
     onDrop,
-  })
+    noClick: true,
+    noKeyboard: true,
+  });
 
   const previewFile = (file) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewSource(reader.result)
-    }
-  }
+      setPreviewSource(reader.result);
+    };
+  };
 
   useEffect(() => {
-    register(name, { required: true })
-  }, [register])
+    register(name, { required: true });
+  }, [register, name]);
 
   useEffect(() => {
-    setValue(name, selectedFile)
-  }, [selectedFile, setValue])
+    setValue(name, selectedFile, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  }, [selectedFile, setValue]);
 
   return (
     <div className="flex flex-col space-y-2">
       <label className="text-sm text-richblack-5" htmlFor={name}>
         {label} {!viewData && <sup className="text-pink-200">*</sup>}
       </label>
+
       <div
         className={`${
           isDragActive ? "bg-richblack-600" : "bg-richblack-700"
         } flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
-        onClick={() => inputRef.current.click()}  // Open file dialog on click
+        onClick={() => open()} // ✅ FIXED: call open function
       >
         {previewSource ? (
           <div className="flex w-full flex-col p-6">
@@ -70,14 +77,21 @@ export default function Upload({
                 alt="Preview"
                 className="h-full w-full rounded-md object-cover"
               />
-            ) : null}
+            ) : (
+              <ReactPlayer
+                url={previewSource}
+                width="100%"
+                height="auto"
+                controls
+              />
+            )}
             {!viewData && (
               <button
                 type="button"
                 onClick={() => {
-                  setPreviewSource("")
-                  setSelectedFile(null)
-                  setValue(name, null)
+                  setPreviewSource("");
+                  setSelectedFile(null);
+                  setValue(name, null);
                 }}
                 className="mt-3 text-richblack-400 underline"
               >
@@ -90,7 +104,7 @@ export default function Upload({
             <input
               {...getInputProps()}
               ref={inputRef}
-              style={{ display: "none" }} // Hide input field
+              style={{ display: "none" }}
             />
             <div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
               <FiUploadCloud className="text-2xl text-yellow-50" />
@@ -99,7 +113,7 @@ export default function Upload({
               Drag and drop an {!video ? "image" : "video"}, or{" "}
               <span
                 className="font-semibold text-yellow-50 cursor-pointer"
-                onClick={() => inputRef.current.click()} // Trigger file input
+                onClick={() => inputRef.current.click()}
               >
                 Browse
               </span>
@@ -107,16 +121,17 @@ export default function Upload({
             <ul className="mt-10 flex list-disc justify-between space-x-12 text-center text-xs text-richblack-200">
               <li>Aspect ratio 16:9</li>
               <li>Recommended size 1024x576</li>
-              <li>Less then 5mb</li>
+              <li>Less than 5MB</li>
             </ul>
           </div>
         )}
       </div>
+
       {errors[name] && (
         <span className="ml-2 text-xs tracking-wide text-pink-200">
           {label} is required
         </span>
       )}
     </div>
-  )
+  );
 }

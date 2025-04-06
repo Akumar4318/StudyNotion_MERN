@@ -2,7 +2,7 @@ import React from 'react'
 
 const IconBtn = ({
     text,
-    onclick,
+    onClick,
     children,
     disabled,
     outline=false,
@@ -14,7 +14,7 @@ const IconBtn = ({
         <button
         
         disabled={disabled}
-        onClick={onclick}
+        onClick={onClick}
         type={type}
         className={`flex items-center ${
             outline ? "border border-yellow-50 bg-transparent" : "bg-yellow-50"
