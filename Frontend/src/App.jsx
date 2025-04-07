@@ -20,6 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AddCourse from "./Components/core/Dashboard/AddCourse";
 import MyCourses from "./Components/core/Dashboard/MyCourses";
 import EditCourse from "./Components/core/Dashboard/EditCourse/EditCourse";
+import Catalog from "./Pages/Catalog";
+import Error from "./Pages/Error";
 
 
 
@@ -34,8 +36,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="catalog/:catalogName"></Route>
+      
         <Route path="/about-us" element={<About/>}></Route>
+        <Route path="catalog/:catalogName" element={<Catalog/>} />
 
         <Route
           path="/signup"
@@ -99,7 +102,7 @@ function App() {
 
         </Route>
 
-
+        <Route path="*" element={<Error/>} />
       </Routes>
     </div>
   );
