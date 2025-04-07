@@ -91,6 +91,7 @@ exports.categoryPageDetails = async (req, res) => {
         })
         .exec()
         //console.log("Different COURSE", differentCategory)
+        
       // Get top-selling courses across all categories
       const allCategories = await Category.find()
         .populate({

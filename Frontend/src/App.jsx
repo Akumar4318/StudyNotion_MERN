@@ -35,6 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="catalog/:catalogName"></Route>
+        <Route path="/about-us" element={<About/>}></Route>
 
         <Route
           path="/signup"
@@ -69,11 +70,7 @@ function App() {
             <VerifyEmail />
           </OpenRoute>} />
 
-        <Route
-          path="/about"
-          element={<OpenRoute>
-            <About />
-          </OpenRoute>} />
+      
         <Route
 
           element={<PrivateRoute>
