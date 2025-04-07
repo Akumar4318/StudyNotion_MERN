@@ -6,6 +6,8 @@ import { categories } from "../Services/api";
 import { getCatalogPageData } from "../Services/operstions/pageAndComponentData";
 import Course_Card from "../Components/core/Catalog/Course_Card";
 import CourseSlider from "../Components/core/Catalog/CourseSlider";
+import { useSelector } from "react-redux";
+import Error from "./Error";
 
 
 
@@ -16,6 +18,7 @@ const Catalog = () => {
     const [catalogPageData,setCataLogPageData]=useState(null);
     const[categoryId,setCategoryId]=useState('')
     const [active, setActive] = useState(1)
+    const { loading } = useSelector((state) => state.profile)
     // fetch all categories
 
     useEffect(()=>{
@@ -33,15 +36,31 @@ const Catalog = () => {
         const getCategoryDetails=async()=>{
             try{
                 const res=await getCatalogPageData(categoryId);
+                console.log(res)
                 setCataLogPageData(res)
             }
             catch(error){
                 console.log(error)
             }
         }
-
+        if(categoryId){
+            
         getCategoryDetails()
+        }
+
     },[categoryId])
+
+    
+    if (loading || !catalogPageData) {
+        return (
+          <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+            <div className="spinner"></div>
+          </div>
+        )
+      }
+      if (!loading && !catalogPageData.success) {
+        return <Error />
+      }
 
   return (
     <div className=" box-content bg-richblack-800 px-4">
@@ -60,7 +79,7 @@ const Catalog = () => {
         {/* section1 */}\
         <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
             <div className="section_heading" >Courses to get you started</div>
-          <div clclassName="my-4 flex border-b border-b-richblack-600 text-sm">
+          <div className="my-4 flex border-b border-b-richblack-600 text-sm">
             <p className={`px-4 py-2 ${
                   active === 1
                     ? "border-b border-b-yellow-25 text-yellow-25"
