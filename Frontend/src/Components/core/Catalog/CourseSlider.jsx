@@ -8,7 +8,7 @@ import "swiper/css/scrollbar";
 import Course_Card from "./Course_Card";
 
 const CourseSlider = ({ Courses }) => {
-    console.log(Courses)
+   
   return (
     <>
       {Courses.length > 0 ? (
@@ -30,7 +30,7 @@ const CourseSlider = ({ Courses }) => {
           pagination={{ clickable: true }}
         //   scrollbar={{ draggable: true }}
         
-          onSlideChange={() => console.log("slide change")}
+          
         >
           {Courses?.map((course, index) => (
             <SwiperSlide key={index}>

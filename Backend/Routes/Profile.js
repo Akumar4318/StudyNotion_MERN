@@ -23,6 +23,7 @@ router.put('/updateprofile',auth,isDemo,updateProfile)
 router.get('/getuserdetails',auth,getUserDetails)
 
 // Get Enrolled Courses
+
 router.get("/getEnrolledCourses", auth, getEnrolledCourses)
 router.put("/updateDisplayPicture", auth,isDemo, updateDisplayPicture)
 
