@@ -103,6 +103,7 @@ console.log(orderResponse)
     })
   } catch (error) {
     console.log("PAYMENT API ERROR", error);
+   
     toast.error("could not make payment");
   }
 

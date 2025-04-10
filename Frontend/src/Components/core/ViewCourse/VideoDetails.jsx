@@ -7,7 +7,6 @@ import {
 } from "../../../Slice/viewCourseSlice";
 import { markLectureAsComplete } from "../../../Services/operstions/courseDetailsAPI";
 import ReactPlayer from "react-player";
-import { IoPlayCircleOutline } from "react-icons/io5";
 import IconBtn from "../../common/IconBtn";
 
 const VideoDetails = () => {
@@ -18,33 +17,35 @@ const VideoDetails = () => {
   const { token } = useSelector((state) => state.auth);
   const { courseSectionData, courseEntireData, completedLectures } =
     useSelector((state) => state.viewCourse);
-
   const location = useLocation();
-  const [videoData, setVideoData] = useState([]);
+
+  const [previewSource, setPreviewSource] = useState("");
+  const [videoData, setVideoData] = useState({});
   const [videoEnded, setVideoEnded] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const setVideoSpecificDetails = async () => {
-      if (!setCourseSectionData.length) {
+      if (!courseSectionData.length) return;
+
+      if (!courseId || !sectionId || !subSectionId) {
+        navigate("/dashboard/enrolled-course");
         return;
       }
 
-      if (!courseId && !sectionId && !subSectionId) {
-        navigate("/dashboard/enrolled-course");
-      } else {
-        const filtereData = courseSectionData.filter(
-          (course) => course._id === sectionId
-        );
+      const filterData = courseSectionData.find(
+        (course) => course._id === sectionId
+      );
 
-        const filterVideoData = filtereData?.[0].subSection.filter(
-          (data) => data._id === subSectionId
-        );
+      const filterVideoData = filterData?.subSection.find(
+        (data) => data._id === subSectionId
+      );
 
-        setVideoData(filterVideoData[0]);
-        setVideoEnded(false);
-      }
+      setVideoData(filterVideoData || {});
+      setPreviewSource(courseEntireData?.thumbnail || "");
+      setVideoEnded(false);
     };
+
     setVideoSpecificDetails();
   }, [courseSectionData, courseEntireData, location.pathname]);
 
@@ -52,71 +53,48 @@ const VideoDetails = () => {
     const currentSectionIndex = courseSectionData.findIndex(
       (data) => data._id === sectionId
     );
-
-    const currentSubSectionIndex = courseSectionData[
-      currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
-
-    if (currentSectionIndex === 0 && currentSubSectionIndex === 0) {
-      return true;
-    } else {
-      return false;
-    }
+    const currentSubSectionIndex = courseSectionData?.[currentSectionIndex]?.subSection?.findIndex(
+      (data) => data._id === subSectionId
+    );
+    return currentSectionIndex === 0 && currentSubSectionIndex === 0;
   };
 
   const isLastVideo = () => {
     const currentSectionIndex = courseSectionData.findIndex(
       (data) => data._id === sectionId
     );
-
-    const currentSubSectionIndex = courseSectionData[
-      currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
-
-    const noOfSubSection =
-      courseSectionData[currentSectionIndex].subSection.length;
-
-    if (
+    const currentSubSectionIndex = courseSectionData?.[currentSectionIndex]?.subSection?.findIndex(
+      (data) => data._id === subSectionId
+    );
+    const noOfSubSection = courseSectionData?.[currentSectionIndex]?.subSection?.length;
+    return (
       currentSectionIndex === courseSectionData.length - 1 &&
       currentSubSectionIndex === noOfSubSection - 1
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   };
 
   const goToNextVideo = () => {
     const currentSectionIndex = courseSectionData.findIndex(
       (data) => data._id === sectionId
     );
+    const currentSubSectionIndex = courseSectionData?.[currentSectionIndex]?.subSection?.findIndex(
+      (data) => data._id === subSectionId
+    );
 
-    const currentSubSectionIndex = courseSectionData[
-      currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    const noOfSubSection = courseSectionData?.[currentSectionIndex]?.subSection?.length;
 
-    const noOfSubSection =
-      courseSectionData[currentSectionIndex].subSection.length;
-
-    if (currentSubSectionIndex !== noOfSubSection - 1) {
-      // same section ki next video mai jana hai
-
+    if (currentSubSectionIndex < noOfSubSection - 1) {
       const nextSubSectionId =
         courseSectionData[currentSectionIndex].subSection[
-          currentSectionIndex + 1
-        ]._id;
-
-      // iss video pa jaoo
+          currentSubSectionIndex + 1
+        ]?._id;
       navigate(
         `/view-course/${courseId}/section/${sectionId}/sub-section/${nextSubSectionId}`
       );
-    } else {
-      // different section ki first video
-
-      const nextSectionId = courseSectionData[currentSectionIndex + 1]._id;
+    } else if (currentSectionIndex + 1 < courseSectionData.length) {
+      const nextSectionId = courseSectionData[currentSectionIndex + 1]?._id;
       const nextSubSectionId =
-        courseSectionData[currentSectionIndex + 1].subsection[0]._id;
-
+        courseSectionData[currentSectionIndex + 1]?.subSection?.[0]?._id;
       navigate(
         `/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`
       );
@@ -127,59 +105,41 @@ const VideoDetails = () => {
     const currentSectionIndex = courseSectionData.findIndex(
       (data) => data._id === sectionId
     );
+    const currentSubSectionIndex = courseSectionData?.[currentSectionIndex]?.subSection?.findIndex(
+      (data) => data._id === subSectionId
+    );
 
-    const currentSubSectionIndex = courseSectionData[
-      currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
-
-    const noOfSubSection =
-      courseSectionData[currentSectionIndex].subSection.length;
-
-    if (currentSubSectionIndex != 0) {
-      // same section prev video
-
+    if (currentSubSectionIndex > 0) {
       const preSubSectionId =
         courseSectionData[currentSectionIndex].subSection[
           currentSubSectionIndex - 1
-        ];
-      // is video pe cahle jaoo
-
+        ]?._id;
       navigate(
         `/view-course/${courseId}/section/${sectionId}/sub-section/${preSubSectionId}`
       );
-    } else {
-      // different section laset video
-
-      const preSectionId = courseSectionData[currentSectionIndex - 1]._id;
+    } else if (currentSectionIndex > 0) {
+      const preSectionId = courseSectionData[currentSectionIndex - 1]?._id;
       const preSubSectionLength =
-        courseSectionData[currentSectionIndex - 1].subSection.length;
-      const nextSubSectionId =
-        courseSectionData[currentSectionIndex - 1].subsection[
+        courseSectionData[currentSectionIndex - 1]?.subSection?.length;
+      const preSubSectionId =
+        courseSectionData[currentSectionIndex - 1]?.subSection?.[
           preSubSectionLength - 1
-        ]._id;
-
-      // next video pe chale jaoo
-
+        ]?._id;
       navigate(
-        `/view-course/${courseId}/section/${preSectionId}/sub-section/${nextSubSectionId}`
+        `/view-course/${courseId}/section/${preSectionId}/sub-section/${preSubSectionId}`
       );
     }
   };
 
   const handleLectureCompletion = async () => {
     setLoading(true);
-
     const res = await markLectureAsComplete(
-      { courseId: courseId, subSectionId: subSectionId },
+      { courseId, subSectionId },
       token
     );
-
-    /// state update
-
     if (res) {
       dispatch(updateCompletedLectures(subSectionId));
     }
-
     setLoading(false);
   };
 
@@ -188,73 +148,64 @@ const VideoDetails = () => {
       {!videoData ? (
         <div>No data found</div>
       ) : (
-        <ReactPlayer
-          url={videoData?.videoUrl}
-          controls={true}
-          pip={true}
-          width="100%"
-          height="auto"
-          onEnded={() => setVideoEnded(true)}
-          playsinline
-        >
-          <IoPlayCircleOutline position="center"/>
-
+        <div className="relative w-full">
+          <ReactPlayer
+            ref={playerRef}
+            url={videoData?.videoUrl}
+            controls={true}
+            width="100%"
+            height="auto"
+            onEnded={() => setVideoEnded(true)}
+            playsinline
+          />
           {videoEnded && (
-            <div style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgb(0, 0, 0), rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.1)",
-              }}
-              className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter">
+            <div
+              className="absolute inset-0 gap-y-4 z-[100] grid h-full place-content-center font-inter bg-gradient-to-t from-black via-black/70 via-30% to-transparent"
+            >
               {!completedLectures.includes(subSectionId) && (
-                <IconBtn customClasses="text-xl max-w-max px-4 mx-auto"
+                <IconBtn
+                  customClasses="text-xl max-w-max px-4 mx-auto"
                   disabled={loading}
-                  onClick={() => handleLectureCompletion()}
+                  onClick={handleLectureCompletion}
                   text={!loading ? "Mark as completed" : "Loading"}
                 />
               )}
-
-              <Icon
+              <IconBtn
                 disabled={loading}
                 onClick={() => {
-                  if (playerRef?.current) {
-                    playerRef.current?.seek(0);
-                    setVideoEnded(false);
-                  }
+                  playerRef.current?.seekTo(0);
+                  setVideoEnded(false);
                 }}
                 text="Rewatch"
-               customClasses="text-xl max-w-max px-4 mx-auto mt-2"
+                customClasses="text-xl max-w-max px-4 mx-auto mt-2"
               />
-
               <div className="mt-10 flex min-w-[250px] justify-center gap-x-4 text-xl">
                 {!isFirstVideo() && (
                   <button
                     disabled={loading}
                     onClick={goToPreVideo}
                     className="blackButton"
-                  >Prev</button>
+                  >
+                    Prev
+                  </button>
                 )}
-
-                {
-                    !isLastVideo() && (
-                        <button
+                {!isLastVideo() && (
+                  <button
                     disabled={loading}
                     onClick={goToNextVideo}
                     className="blackButton"
-                  >Next</button>
-                    )
-                }
+                  >
+                    Next
+                  </button>
+                )}
               </div>
             </div>
           )}
-
-       
-        </ReactPlayer>
+        </div>
       )}
-
 
       <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>
       <p className="pt-2 pb-6">{videoData?.description}</p>
-
     </div>
   );
 };

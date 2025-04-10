@@ -5,7 +5,11 @@ const User = require("../Models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const SubSection = require("../Models/SubSection");
 const Section = require("../Models/Section");
+const CourseProgress = require("../Models/CourseProgress");
+const { convertSecondsToDuration } = require("../utils/secToDuration");
 require("dotenv").config();
+
+
 
 /// createCourse handler function
 
@@ -383,7 +387,7 @@ exports.getFullCourseDetails = async (req, res) => {
         },
       })
       .populate("category")
-      // .populate("ratingAndReview")
+      .populate("ratingAndReview")
       .populate({
         path: "courseContent",
         populate: {
@@ -393,7 +397,7 @@ exports.getFullCourseDetails = async (req, res) => {
       .exec()
 
     let courseProgressCount = await CourseProgress.findOne({
-      courseID: courseId,
+      courseId: courseId,
       userId: userId,
     })
 

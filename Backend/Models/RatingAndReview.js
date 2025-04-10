@@ -3,7 +3,7 @@ const mongoose=require('mongoose')
 
 
 
-const reatingAndReviewSchema=new mongoose.Schema({
+const ratingAndReviewSchema=new mongoose.Schema({
 
    user:{
     type:mongoose.Schema.Types.ObjectId,
@@ -22,4 +22,4 @@ const reatingAndReviewSchema=new mongoose.Schema({
 
 })
 
-module.exports= mongoose.model("ReatingAndReview",reatingAndReviewSchema)
+module.exports= mongoose.model("ratingAndReview",ratingAndReviewSchema)

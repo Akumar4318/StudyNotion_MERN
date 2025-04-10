@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {useParams} from 'react-router-dom'
+import {Outlet, useParams} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import { setCompletedLectures, setCourseSectionData, setEntireCourseData, setTotalNoOfLectures } from '../Slice/viewCourseSlice'
 import { getFullDetailsOfCourse } from '../Services/operstions/courseDetailsAPI'
@@ -20,6 +20,7 @@ const ViewCourses = () => {
         const setCourseSpecifictDetails=async()=>{
 
             const courseData=await getFullDetailsOfCourse(courseId,token);
+            console.log(courseData)
             dispatch(setCourseSectionData(courseData?.courseDetails.courseContent));
             dispatch(setEntireCourseData(courseData.courseDetails));
             dispatch(setCompletedLectures(courseData.completedVideos));
@@ -31,8 +32,9 @@ const ViewCourses = () => {
 
             dispatch(setTotalNoOfLectures(lectures));
 
-
         }
+
+        setCourseSpecifictDetails()
     },[])
 
 
@@ -40,8 +42,14 @@ const ViewCourses = () => {
     
   return (
   <>
-      <div>
+      <div className="relative flex min-h-[calc(100vh-3.5rem)]">
         <VideoDetailsSidebar setReviewModal={setReviewModal}/>
+        <div  className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
+            <div className="mx-6">
+<Outlet/>
+            </div>
+
+        </div>
     </div>
 
     {

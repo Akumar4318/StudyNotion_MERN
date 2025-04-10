@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getEnrolledCourses } from "../../../Services/operstions/profileAPI";
-import Uppy from "@uppy/core";
-import ProgressBar from "@uppy/progress-bar";
+
 import Loader from "../../common/Loader";
 import { useNavigate } from "react-router-dom";
 import { Line, Circle } from 'rc-progress';
