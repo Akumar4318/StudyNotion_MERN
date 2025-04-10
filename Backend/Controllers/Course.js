@@ -152,7 +152,7 @@ exports.showAllCourses = async (req, res) => {
         price: true,
         thumbnail: true,
         instructor: true,
-        reatingAndReviews: true,
+        ratingAndReviews: true,
         studentsEnrolled: true,
       }
     )

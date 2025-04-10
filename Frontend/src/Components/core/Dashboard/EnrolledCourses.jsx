@@ -17,7 +17,7 @@ const EnrolledCourses = () => {
     try {
       const response = await getEnrolledCourses(token);
       setEnrolledCourses(response);
-      console.log(response);
+    
     } catch (error) {
       console.log("Unable to Fetch Enrolled Courses", error);
     }
@@ -77,8 +77,11 @@ const EnrolledCourses = () => {
                 </div>
 
                 <div className="w-1/4 px-2 py-3">{course?.totalDuration}</div>
+              
 
                 <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
+              
+               
                   <p>Progress:{course.progressPercentage || 0}%</p>
                   
                   <Line percent={course.progressPercentage || 0} strokeLinecap={'round'}  trailWidth={6} strokeWidth={6} strokeColor="#ffd60a" />

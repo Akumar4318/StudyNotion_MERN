@@ -61,7 +61,7 @@ const CourseDetails = () => {
 
   // useEffect(()=>{
 
-  //     const count=GetAvgRating(courseData?.data?.CourseDetails.reatingAndReviews);
+  //     const count=GetAvgRating(courseData?.data?.CourseDetails.ratingAndReviews);
   //     setAverageReviewCount(count);
   // },[courseData])
 

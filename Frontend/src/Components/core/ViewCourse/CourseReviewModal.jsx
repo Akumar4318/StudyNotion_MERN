@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import RatingStar from "../../common/RatingStar";
-
+import { RxCross2 } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 import ReactStars from "react-rating-stars-component";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+
 import IconBtn from "../../common/IconBtn";
 import { createRating } from "../../../Services/operstions/courseDetailsAPI";
 
@@ -11,6 +13,7 @@ const CourseReviewModal = ({ setReviewModal }) => {
   const { user } = useSelector((state) => state.profile);
   const { token } = useSelector((state) => state.auth);
   const { courseEntireData } = useSelector((state) => state.viewCourse);
+
   const {
     register,
     handleSubmit,
@@ -18,12 +21,15 @@ const CourseReviewModal = ({ setReviewModal }) => {
     formState: { errors },
   } = useForm();
 
+  const [rating, setRating] = useState(0);
+
   useEffect(() => {
     setValue("courseExperience", "");
     setValue("courseRating", 0);
-  });
+  }, [setValue]);
 
   const ratingChanged = (newRating) => {
+    setRating(newRating);
     setValue("courseRating", newRating);
   };
 
@@ -38,81 +44,90 @@ const CourseReviewModal = ({ setReviewModal }) => {
     );
     setReviewModal(false);
   };
-  return (
-    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
-      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
-        {/* Modal Header */}
 
-        <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
+  return (
+    <div className="fixed inset-0 z-[1000] grid h-screen w-screen place-items-center bg-white/10 backdrop-blur-sm">
+      <div className="my-10 w-11/12 max-w-[700px] rounded-2xl border border-richblack-400 bg-richblack-800 shadow-lg">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between rounded-t-2xl bg-richblack-700 px-6 py-4">
           <p className="text-xl font-semibold text-richblack-5">Add Review</p>
-          <button
-            onClick={() => {
-              setReviewModal(false);
-            }}
-          >
-            {" "}
-            <RxCross2 className="text-2xl text-richblack-5" />
+          <button onClick={() => setReviewModal(false)}>
+            <RxCross2 className="text-2xl text-richblack-5 hover:text-pink-200 transition-all" />
           </button>
         </div>
 
         {/* Modal Body */}
-
-        <div className="p-6">
-          <div className="flex items-center justify-center gap-x-4">
+        <div className="px-6 py-4">
+          <div className="flex items-center gap-4">
             <img
               src={user?.image}
-              alt="user Image"
-              className="aspect-square w-[50px] rounded-full object-cover"
+              alt="User"
+              className="h-[50px] w-[50px] rounded-full object-cover"
             />
             <div>
               <p className="font-semibold text-richblack-5">
                 {user?.firstName} {user?.lastName}
               </p>
-              <p className="text-sm text-richblack-5">Posting Publicly</p>
+              <p className="text-sm text-richblack-100">Posting Publicly</p>
             </div>
           </div>
         </div>
 
-        <form action="" onSubmit={handleSubmit(onSubmit)}>
-          <ReactStars
-            count={5}
-            onChange={ratingChanged}
-            size={24}
-            activeColor="ffd700"
-          />
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 px-6 py-4">
+          {/* Ratings */}
+          <div className="flex items-center gap-4">
+            <ReactStars
+              count={5}
+              value={rating}
+              onChange={ratingChanged}
+              size={24}
+              activeColor="#ffd700"
+            />
+            <Rating
+              style={{ maxWidth: 250 }}
+              value={rating}
+              onChange={ratingChanged}
+            />
+            <input
+              type="hidden"
+              {...register("courseRating", { required: true })}
+            />
+          </div>
+          {errors.courseRating && (
+            <span className="text-xs text-pink-200">Please provide a rating</span>
+          )}
 
-          <div className="flex w-11/12 flex-col space-y-2">
+          {/* Experience Field */}
+          <div className="flex flex-col space-y-2">
             <label
-              className="text-sm text-richblack-5"
               htmlFor="courseExperience"
+              className="text-sm text-richblack-5"
             >
               <sup className="text-pink-200">*</sup> Add your Experience
             </label>
-
             <textarea
-              name=""
               id="courseExperience"
-              className="form-style resize-x-none min-h-[130px] w-full"
+              className="form-style min-h-[130px] w-full resize-none"
               placeholder="Add your experience here"
               {...register("courseExperience", { required: true })}
-            ></textarea>
+            />
             {errors.courseExperience && (
-              <span className="ml-2 text-xs tracking-wide text-pink-200">
+              <span className="ml-1 text-xs text-pink-200">
                 Please Add Your Experience
               </span>
             )}
           </div>
 
-          <div className="mt-6 flex w-11/12 justify-end gap-x-2">
+          {/* Buttons */}
+          <div className="flex justify-end gap-4">
             <button
-              className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900`}
-              onClick={() => {
-                setReviewModal(false);
-              }}
+              type="button"
+              onClick={() => setReviewModal(false)}
+              className="rounded-md bg-richblack-300 px-5 py-2 text-sm font-semibold text-richblack-900 transition-all hover:bg-richblack-200"
             >
               Cancel
             </button>
-
             <IconBtn text="Save" />
           </div>
         </form>

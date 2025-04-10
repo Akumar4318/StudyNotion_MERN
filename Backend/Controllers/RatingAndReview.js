@@ -13,11 +13,16 @@ exports.createRating=async(req,res)=>{
         //? fetch from reqbody
         const {rating,review,courseId}=req.body;
         //? cehck user enrolled or not 
+
+
+       
         const courseDetails=await Course.findOne(
                                     {_id:courseId,
-                                        studentsEnrolled:{$elemMatch:{$eq:userId}}
+                                        studentEnrolled:{$elemMatch:{$eq:userId}}
                                     }
         )
+
+        console.log(courseDetails)
         if(!courseDetails){
             return res.status(404).json({
                 success:false,
@@ -28,7 +33,7 @@ exports.createRating=async(req,res)=>{
 
         const alreadyReviewd=await RatingAndReview.findOne({
                                     user:userId,
-                                    course:courseId,
+                                    Course:courseId,
         })
         if(alreadyReviewd){
             return res.status(403).json({
@@ -40,7 +45,7 @@ exports.createRating=async(req,res)=>{
         //? create review
 
         const ratingReview=await RatingAndReview.create({
-            rating,review,course:courseId,
+            rating,review,Course:courseId,
             user:userId,
         })
         //? attach the review in the course and update the course with this rating/reviews
@@ -136,7 +141,7 @@ exports.getAllrating=async(req,res)=>{
                                         select:"firstName lastName email"
                                     })
                                     .populate({
-                                        path:"course",
+                                        path:"Course",
                                         select:"courseName"
                                     }).exec();
                                     
