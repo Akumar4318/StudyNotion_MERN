@@ -4,6 +4,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import { setCompletedLectures, setCourseSectionData, setEntireCourseData, setTotalNoOfLectures } from '../Slice/viewCourseSlice'
 import { getFullDetailsOfCourse } from '../Services/operstions/courseDetailsAPI'
 import CourseReviewModal from '../Components/core/ViewCourse/CourseReviewModal'
+import VideoDetailsSidebar from '../Components/core/ViewCourse/VideoDetailsSidebar'
 
 
 
