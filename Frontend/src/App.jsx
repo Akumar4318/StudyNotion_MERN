@@ -26,6 +26,7 @@ import CourseDetails from "./Pages/CourseDetails";
 import ViewCourses from "./Pages/ViewCourses";
 import VideoDetails from "./Components/core/ViewCourse/VideoDetails";
 import Insturctor from "./Components/core/Dashboard/InstructorDashboard/Insturctor";
+import Settings from "./Components/core/Dashboard/Setting/Settings";
 
 
 
@@ -86,6 +87,7 @@ function App() {
           </PrivateRoute>}
         >
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
+          <Route path="/dashboard/settings" element={<Settings />} />
         
 
 

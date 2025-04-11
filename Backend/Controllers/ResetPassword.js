@@ -68,65 +68,43 @@ exports.resetPasswordToken=async(req,res)=>{
 // resetPassword
 
 exports.resetPassword=async(req,res)=>{
+	try {
+		const { password, confirmPassword, token } = req.body;
 
-    try {
-        
-        // fetch data 
-
-        const{password,confirmPassword,token}=req.body 
-
-        //? validation 
-        if(password !==confirmPassword){
-            return res.status(400).json({
-                success:false,
-                message:'passwrod is not matching'
-            })
-        }
-
-        //? get UserDetails from db using token 
-        const userDetails=await User.findOne({token:token})
-
-        //? if no entry -- invalid token 
-        if(!userDetails){
-            return res.json({
-                success:false,
-                message:'token is invalid'
-            })
-        }
-
-        // token time check 
-
-        if(userDetails.resetPasswordExpires<Date.now()){
-            return res.json({
-                success:false,
-                message:"token in expired please regenerate your token ",
-            })
-        }
-
-        //? hash password
-
-        const hashedPassword=await bcrypt.hash(password,10)
-
-        //? password update
-
-        await User.findOneAndUpdate(
-            {token:token},
-            {password:hashedPassword},
-            {new:true}
-        )
-
-        //? return response
-
-        return res.status(200).json({
-            success:true,
-            message:"password reset successfully"
-        })
-    } catch (error) {
-        
-         res.status(400).json({
-            success:false,
-            message:"Somthing went wrong while sending  the reset password",
-            message:error.message
-        })
-    }
+		if (confirmPassword !== password) {
+			return res.json({
+				success: false,
+				message: "Password and Confirm Password Does not Match",
+			});
+		}
+		const userDetails = await User.findOne({ token: token });
+		if (!userDetails) {
+			return res.json({
+				success: false,
+				message: "Token is Invalid",
+			});
+		}
+		if (!(userDetails.resetPasswordExpires > Date.now())) {
+			return res.status(403).json({
+				success: false,
+				message: `Token is Expired, Please Regenerate Your Token`,
+			});
+		}
+		const encryptedPassword = await bcrypt.hash(password, 10);
+		await User.findOneAndUpdate(
+			{ token: token },
+			{ password: encryptedPassword },
+			{ new: true }
+		);
+		res.json({
+			success: true,
+			message: `Password Reset Successful`,
+		});
+	} catch (error) {
+		return res.json({
+			error: error.message,
+			success: false,
+			message: `Some Error in Updating the Password`,
+		});
+	}
 }

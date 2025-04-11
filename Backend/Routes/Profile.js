@@ -15,10 +15,10 @@ const {isDemo}=require('../Middleware/demo')
 // ********************************************************************************************************
 
 // delete User Account
-router.delete('/deleteprofile',auth,isDemo,deleteAccount)
+router.delete("/deleteProfile", auth, deleteAccount)
 
 //updateProfile
-router.put('/updateprofile',auth,isDemo,updateProfile)
+router.put("/updateProfile", auth, updateProfile)
 
 // getUserDetails
 
@@ -27,7 +27,7 @@ router.get('/getuserdetails',auth,getUserDetails)
 // Get Enrolled Courses
 
 router.get("/getEnrolledCourses", auth, getEnrolledCourses)
-router.put("/updateDisplayPicture", auth,isDemo, updateDisplayPicture)
+router.put("/updateDisplayPicture", auth, updateDisplayPicture)
 router.get("/instructorDashboard", auth, isInstructor, instructorDashboard)
 
 
