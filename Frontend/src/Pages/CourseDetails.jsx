@@ -12,10 +12,11 @@ import { formatDate } from "../Services/formatDate";
 import CourseDetailsCard from "../Components/core/Course/CourseDetailsCard";
 import { BiInfoCircle } from "react-icons/bi";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
-import Footer from "../components/common/Footer";
+
 import Markdown from "react-markdown";
 import GetAvgRating from "../utils/avgRating";
 import CourseAccordionBar from "../Components/core/Course/CourseAccordionBar";
+import Footer from "../Components/common/Footer";
 
 const CourseDetails = () => {
   const { user } = useSelector((state) => state.profile);

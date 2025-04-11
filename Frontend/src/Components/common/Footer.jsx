@@ -138,7 +138,7 @@ const Footer = () => {
                           key={index}
                           className="text-[14px] cursor-pointer hover:text-richblack-50 transition-all duration-200"
                         >
-                          <Link to={link.link}>{link.title}</Link>
+                          <Link to='/comingsoon'>{link.title}</Link>
                         </div>
                       );
                     })}

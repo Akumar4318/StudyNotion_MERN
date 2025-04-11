@@ -27,6 +27,8 @@ import ViewCourses from "./Pages/ViewCourses";
 import VideoDetails from "./Components/core/ViewCourse/VideoDetails";
 import Insturctor from "./Components/core/Dashboard/InstructorDashboard/Insturctor";
 import Settings from "./Components/core/Dashboard/Setting/Settings";
+import CourseComingPage from "./Pages/CourseComingPage";
+import Contact from "./Pages/Contact";
 
 
 
@@ -43,6 +45,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
       
         <Route path="/about-us" element={<About/>}></Route>
+       
         <Route path="catalog/:catalogName" element={<Catalog/>} />
         <Route path="courses/:courseId" element={<CourseDetails/>} />
 
@@ -88,8 +91,9 @@ function App() {
         >
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
           <Route path="/dashboard/settings" element={<Settings />} />
+          
         
-
+          <Route path="/contact" element={<Contact />} />
 
 
 
@@ -97,6 +101,7 @@ function App() {
             <>
               <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
               <Route path="dashboard/cart" element={<Cart />} />
+              <Route path="/comingsoon" element={<CourseComingPage/>}></Route>
             </>
           )}
 
