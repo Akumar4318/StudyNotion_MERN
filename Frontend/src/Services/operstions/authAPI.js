@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { setToken } from "../../Slice/authSlice";
 import { setUser } from "../../Slice/profileSlice"
 import { endpoints } from "../api";
+import { useNavigate } from "react-router-dom";
 
 
 const {
@@ -17,6 +18,7 @@ const {
 // Funtion for send otp
 
 export function sendOtp(email, navigate) {
+  console.log(email,navigate)
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));

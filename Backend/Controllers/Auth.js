@@ -130,11 +130,11 @@ try {
 
     const recentOTP= await OTP.findOne({email}).sort({createdAt:-1}).limit(1);
 
-   console.log(recentOTP)
+
 
     //? validate otp
 
-    if(recentOTP.length===0){
+    if(recentOTP.length === 0){
         return res.status(400).json({
             success:false,
             message:'OTP NOT FOUND'
@@ -299,6 +299,7 @@ exports.sendotp = async (req, res) => {
         specialChars: false,
       })
       const result = await OTP.findOne({ otp: otp })
+      
       console.log("Result is Generate OTP Func")
       console.log("OTP", otp)
       console.log("Result", result)

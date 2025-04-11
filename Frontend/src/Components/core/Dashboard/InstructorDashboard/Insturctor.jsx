@@ -143,7 +143,7 @@ const Insturctor = () => {
           <p className="text-2xl font-bold text-richblack-5">
             You haven’t created a course yet
           </p>
-          <Link to="/dashboard/addCourse">
+          <Link to="/dashboard/add-course">
             <p className="mt-1 text-lg font-semibold text-yellow-50">
               Create a course
             </p>
