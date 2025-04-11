@@ -3,7 +3,8 @@ const Profile = require("../Models/Profile");
 const User = require("../Models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secToDuration");
-const CourseProgress = require("../Models/CourseProgress")
+const CourseProgress = require("../Models/CourseProgress");
+const Course = require("../Models/Course");
 
 
 
@@ -236,6 +237,44 @@ exports.getEnrolledCourses = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: error.message,
+    })
+  }
+}
+
+
+exports.instructorDashboard=async(req,res)=>{
+
+  try {
+    
+    const courseDetails=await Course.find({instructor:req.user.id});
+
+    const CourseData=courseDetails.map((course)=>{
+      const totalStudentEnrolled=course.studentEnrolled.length
+      const totalAmountGenereted=totalStudentEnrolled *course.price;
+
+
+      // create an new object with the additional fields
+
+      const courseDataWithStats={
+        _id:course._id,
+        courseName:course.courseName,
+        courseDescription:course.courseDescription,
+        totalStudentEnrolled,
+        totalAmountGenereted,
+      }
+
+      return courseDataWithStats;
+    })
+
+
+    res.status(200).json({
+      course:CourseData
+    })
+
+  } catch (error) {
+    console.error(erro);
+    res.status(500).json({
+      message:"Interna server error"
     })
   }
 }

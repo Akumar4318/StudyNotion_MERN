@@ -1,36 +1,38 @@
-import React, { useEffect, useState } from "react"
-import ReactStars from "react-rating-stars-component"
-import { Swiper, SwiperSlide } from "swiper/react"
-import {
-  Autoplay,
-  FreeMode,
-  Pagination,
-} from "swiper/modules"
+import React, { useEffect, useState } from "react";
+import ReactStars from "react-rating-stars-component";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, FreeMode, Pagination } from "swiper/modules";
+import { Rating,ThinRoundedStar  } from "@smastrom/react-rating";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import "../../App.css";
 
-import "swiper/css"
-import "swiper/css/free-mode"
-import "swiper/css/pagination"
-import "../../App.css"
-
-import { FaStar } from "react-icons/fa"
-import { apiConnector } from "../../Services/apiconnector"
-import { ratingsEndpoints } from "../../Services/api"
+import { FaStar } from "react-icons/fa";
+import { apiConnector } from "../../Services/apiconnector";
+import { ratingsEndpoints } from "../../Services/api";
 
 function ReviewSlider() {
-  const [reviews, setReviews] = useState([])
-  const truncateWords = 15
+  const [reviews, setReviews] = useState([]);
+  const truncateWords = 15;
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       const { data } = await apiConnector(
         "GET",
         ratingsEndpoints.REVIEWS_DETAILS_API
-      )
+      );
       if (data?.success) {
-        setReviews(data?.allReviews)
+        setReviews(data?.allReviews);
       }
-    })()
-  }, [])
+    })();
+  }, []);
+
+  const myStyles = {
+    itemShapes: ThinRoundedStar,
+    activeFillColor: '#ffb700',
+    inactiveFillColor: '#fbf1a9'
+  }
 
   return (
     <div className="text-white w-full px-4 py-10">
@@ -86,12 +88,21 @@ function ReviewSlider() {
                   <span className="text-yellow-100 font-semibold">
                     {review.rating.toFixed(1)}
                   </span>
-                  <ReactStars
+                  {/* <ReactStars */}
+                    {/* count={5} */}
+                    {/* value={review.rating} */}
+                    {/* size={20} */}
+                    {/* edit={false} */}
+                    {/* activeColor="#ffd700" */}
+                    {/* emptyIcon={<FaStar />} */}
+                    {/* fullIcon={<FaStar />} */}
+                  {/* /> */}
+
+                  <Rating
                     count={5}
-                    value={review.rating}
-                    size={20}
-                    edit={false}
-                    activeColor="#ffd700"
+                    itemStyles={myStyles} 
+                    value={review.rating} 
+                    style={{ maxWidth: 200 }}
                     emptyIcon={<FaStar />}
                     fullIcon={<FaStar />}
                   />
@@ -102,7 +113,7 @@ function ReviewSlider() {
         </Swiper>
       </div>
     </div>
-  )
+  );
 }
 
-export default ReviewSlider
+export default ReviewSlider;

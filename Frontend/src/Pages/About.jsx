@@ -10,6 +10,7 @@ import Stats from '../Components/core/AboutPage/Stats'
 import LearningGrid from '../Components/core/AboutPage/LearningGrid'
 import ContactFormSection from '../Components/core/AboutPage/ContactFormSection'
 import Footer from '../Components/common/Footer'
+import ReviewSlider from '../Components/common/ReviewSlider'
 
 const About = () => {
   return (
@@ -117,6 +118,8 @@ const About = () => {
       {/* section 06 */}
       <div>
         {/* ReviewSlider */}
+
+        <ReviewSlider/>
       </div>
 
 

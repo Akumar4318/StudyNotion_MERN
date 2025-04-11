@@ -3,8 +3,10 @@ const router = express.Router()
 const{auth,isInstructor}=require('../Middleware/auth')
 
 
+
 const{updateProfile,deleteAccount,getUserDetails,updateDisplayPicture,
-    getEnrolledCourses,}=require('../Controllers/Profile')
+    getEnrolledCourses,
+    instructorDashboard,}=require('../Controllers/Profile')
  
 const {isDemo}=require('../Middleware/demo')    
 
@@ -26,5 +28,8 @@ router.get('/getuserdetails',auth,getUserDetails)
 
 router.get("/getEnrolledCourses", auth, getEnrolledCourses)
 router.put("/updateDisplayPicture", auth,isDemo, updateDisplayPicture)
+router.get("/instructorDashboard", auth, isInstructor, instructorDashboard)
+
+
 
 module.exports=router
