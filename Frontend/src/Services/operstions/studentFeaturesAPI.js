@@ -67,7 +67,7 @@ export async function buyCourse(
 
     // options
  
-console.log(orderResponse)
+// console.log(orderResponse)
 
     const options = {
       key: RAZORPAY_KEY,
@@ -127,7 +127,7 @@ async function sendPaymentSuccessEmail(response, amount, token) {
 
 //verify payment
 async function verifyPayment(bodyData, token, navigate, dispatch) {
-    console.log( dispatch)
+    // console.log( dispatch)
   const toastId = toast.loading("Verifying Payment....");
   dispatch(setPaymentLoading(true));
   try {

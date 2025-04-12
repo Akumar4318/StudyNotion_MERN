@@ -5,7 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 Chart.register(...registerables);
 
 const InstructorChart = ({ courses }) => {
-    console.log(courses)
+   
   const [currChart, setCurrChart] = useState("students");
 
   const generateColorfulGradientColors = (numColors) => {

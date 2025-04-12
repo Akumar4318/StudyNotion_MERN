@@ -9,7 +9,7 @@ exports.updateCourseProgress = async (req, res) => {
  
 
   const userId = req.user.id
-  console.log(userId)
+
 
   try {
     // Check if the subsection is valid
@@ -25,7 +25,7 @@ exports.updateCourseProgress = async (req, res) => {
       userId: userId,
     })
 
-    console.log("amn",courseProgress)
+
     
 
     if (!courseProgress) {
@@ -81,7 +81,7 @@ exports.getProgressPercentage = async (req, res) => {
         .status(400)
         .json({ error: "Can not find Course Progress with these IDs." })
     }
-    console.log(courseProgress, userId)
+ 
     let lectures = 0
     courseProgress.courseID.courseContent?.forEach((sec) => {
       lectures += sec.subSection.length || 0

@@ -23,9 +23,9 @@ const mailSender=async(email,title,body)=>{
 
         })
 
-        console.log(info);
+       
     } catch (error) {
-        console.log("aman")
+      
         console.log(error)
     }
 }

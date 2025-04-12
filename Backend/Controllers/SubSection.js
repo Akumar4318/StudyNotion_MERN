@@ -10,7 +10,7 @@ exports.createsubSection = async (req, res) => {
   try {
     //? fetch data from req.body
     const { title, description, sectionId } = req.body;
-    console.log(title,sectionId,description)
+    
     //? extract file/video
     const video = req.files.video;
     //? validation
@@ -100,7 +100,7 @@ exports.updateSubSection = async (req, res) => {
       "subSection"
     );
 
-    console.log("updated section ", updatedSection);
+ 
 
     return res.status(200).json({
       success: true,

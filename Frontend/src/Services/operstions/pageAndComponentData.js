@@ -5,12 +5,12 @@ import { catalogData } from '../api';
 
 export const getCatalogPageData = async(categoryId) => {
   const toastId = toast.loading("Loading...");
-  console.log(categoryId)
+  // console.log(categoryId)
   let result = [];
   try{
         const response = await apiConnector("POST", catalogData.CATALOGPAGEDATA_API, 
         {categoryId: categoryId,});
-        console.log(response)
+        // console.log(response)
 
         if(!response?.data?.success)
             throw new Error("Could not Fetch Category page data");
@@ -19,7 +19,7 @@ export const getCatalogPageData = async(categoryId) => {
 
   }
   catch(error) {
-    console.log("CATALOG PAGE DATA API ERROR....", error);
+    // console.log("CATALOG PAGE DATA API ERROR....", error);
     toast.error(error.message);
     result = error.response?.data;
   }

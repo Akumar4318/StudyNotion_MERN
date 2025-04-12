@@ -20,7 +20,7 @@ const ViewCourses = () => {
         const setCourseSpecifictDetails=async()=>{
 
             const courseData=await getFullDetailsOfCourse(courseId,token);
-            console.log(courseData)
+          
             dispatch(setCourseSectionData(courseData?.courseDetails.courseContent));
             dispatch(setEntireCourseData(courseData.courseDetails));
             dispatch(setCompletedLectures(courseData.completedVideos));

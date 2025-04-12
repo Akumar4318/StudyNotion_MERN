@@ -10,7 +10,7 @@ const ContactUsForm = () => {
   const [loading, setLoading] = useState(false);
 
   const sumbmitContactForm = async (data) => {
-    console.log("Logging Data", data);
+   
     try {
       setLoading(true);
       const response=await apiConnector("POST",contactusEndpoint.CONTACT_US_API,data);

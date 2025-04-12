@@ -18,7 +18,7 @@ const {
 // Funtion for send otp
 
 export function sendOtp(email, navigate) {
-  console.log(email,navigate)
+ 
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
@@ -28,7 +28,7 @@ export function sendOtp(email, navigate) {
         email,
         checkUserPresent: true,
       });
-      console.log("SENDOTP API RESPONSE............", response);
+      // console.log("SENDOTP API RESPONSE............", response);
 
      
 
@@ -77,8 +77,8 @@ export function signup(
 
                 })
 
-                console.log("SIGNUP API RESPONSE............", response)
-                console.log("hello from reseponse  signupdata",response.data.success);
+                // console.log("SIGNUP API RESPONSE............", response)
+                // console.log("hello from reseponse  signupdata",response.data.success);
 
                 if(!response.data.success){
                     throw new Error (response.data.message)
@@ -107,7 +107,7 @@ export function getPasswordResetToken(email, setEmailSent) {
       const response = await apiConnector("POST", RESETPASSTOKEN_API, {
         email,
       });
-      console.log("RESET PASSWOR  TOKEN RESPONSE ....", response);
+      // console.log("RESET PASSWOR  TOKEN RESPONSE ....", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -134,7 +134,7 @@ export function resetPassword(password, confirmPassword, token) {
         confirmPassword,
         token,
       });
-      console.log("RESET PASSOWRD RESPONSE ...", response);
+      // console.log("RESET PASSOWRD RESPONSE ...", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -142,7 +142,7 @@ export function resetPassword(password, confirmPassword, token) {
 
       toast.success("Password has been reset successfully");
     } catch (error) {
-      console.log("Unbale reset Password");
+      // console.log("Unbale reset Password");
       console.log(error);
       toast.error("Failed to reset the  passowrd");
     }
@@ -163,7 +163,7 @@ export function login(email, password, navigate) {
         password,
       })
 
-      console.log("LOGIN API RESPONSE............", response)
+      // console.log("LOGIN API RESPONSE............", response)
 
       if (!response.data.success) {
         throw new Error(response.data.message)

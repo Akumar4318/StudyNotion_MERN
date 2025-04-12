@@ -26,7 +26,7 @@ exports.auth=async(req,res,next)=>{
         try {
             
             const decode= jwt.verify(token,process.env.JWT_SECRET)
-            console.log(decode);
+          
             req.user=decode
         } catch (error) {
             
@@ -77,7 +77,7 @@ next()
 exports.isInstructor=async(req,res,next)=>{
     try {
         
-        console.log(req.user.accountType)
+      
         if(req.user.accountType!== "Instructor"){
             return res.status(401).json({
                 success:false,

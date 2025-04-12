@@ -33,14 +33,14 @@ exports.resetPasswordToken=async(req,res)=>{
   
       const updatedDetails=await User.findOneAndUpdate({email:email},{
           token:token,
-          resetPasswordExpire:Date.now()+5*60*1000
+          resetPasswordExpires:Date.now()+5*60*1000
       },{new:true})
       //? create url 
-  
+      // console.log("DETAILS", updatedDetails);
       const url = `http://localhost:3000/update-password/${token}`;
       //? send mail containing the url 
 
-      console.log("updateDetials",updatedDetails)
+      
   
       await mailSender(email,"Password Reset Link",
           `Your Link for email verification is ${url}. Please click this url to reset your password.`
@@ -48,6 +48,7 @@ exports.resetPasswordToken=async(req,res)=>{
       // ? return response
 
       return res.status(200).json({
+        token:token,
         success:true,
         message:"email sent successfully please check email and change password"
       })
@@ -71,6 +72,7 @@ exports.resetPassword=async(req,res)=>{
 	try {
 		const { password, confirmPassword, token } = req.body;
 
+
 		if (confirmPassword !== password) {
 			return res.json({
 				success: false,
@@ -78,6 +80,8 @@ exports.resetPassword=async(req,res)=>{
 			});
 		}
 		const userDetails = await User.findOne({ token: token });
+
+ 
 		if (!userDetails) {
 			return res.json({
 				success: false,

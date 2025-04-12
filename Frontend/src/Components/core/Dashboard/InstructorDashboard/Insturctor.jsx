@@ -31,10 +31,7 @@ const Insturctor = () => {
 
     getCourseDataWithStats();
   }, []);
-  {
-    console.log(courses.length);
-  }
-
+  
   const totalAmount = instructorData?.reduce(
     (acc, curr) => acc + curr.totalAmountGenereted,
     0

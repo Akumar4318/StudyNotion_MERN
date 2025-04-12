@@ -31,13 +31,13 @@ const CourseDetails = () => {
   const [courseData, setCourseData] = useState(null);
 
   const [confirmationModal, setConfirmationModal] = useState(null);
-  console.log(courseData);
+ 
 
   useEffect(() => {
     const getCourseFullDetials = async () => {
       try {
         const result = await fetchCourseDetails(courseId);
-        console.log(result);
+      
         setCourseData(result);
       } catch (error) {
         console.log(error);
@@ -126,7 +126,7 @@ const CourseDetails = () => {
 
   return (
     <>
-      <h1>{console.log(courseName)}</h1>
+      
       <div className={`relative w-full bg-richblack-800`}>
         {/* Hero Section */}
         <div className="mx-auto box-content px-4 lg:w-[1260px] 2xl:relative ">

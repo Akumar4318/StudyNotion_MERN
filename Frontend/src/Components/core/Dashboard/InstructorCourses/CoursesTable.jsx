@@ -33,7 +33,7 @@ const CoursesTable = ({ courses, setCourses }) => {
     const result = await fetchInstructorCourses(token);
     if (result) {
         setCourse(result)
-        console.log(  setCourse(result))
+        
         dispatch(setCourse(result))
       
     //   dispatch(setCourse(result))

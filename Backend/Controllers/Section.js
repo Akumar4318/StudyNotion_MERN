@@ -69,7 +69,7 @@ exports.updateSection=async(req,res)=>{
         
         //?  data input
         const {sectionName,sectionId,courseId}=req.body 
-console.log(sectionName,sectionId,courseId)
+
       
         //? data validation
         if(!sectionName || !sectionId){
@@ -112,14 +112,14 @@ exports.deleteSection=async(req,res)=>{
         //? get id -- assuming that we are sending ID in body
 
         const {sectionId,courseId}=req.body
-        console.log("aman",sectionId,courseId)
+      
         await Course.findByIdAndUpdate(courseId, {
 			$pull: {
 				courseContent: sectionId,
 			}
 		})
 		const section = await Section.findById(sectionId);
-		console.log(sectionId, courseId);
+		
 		if(!section) {
 			return res.status(404).json({
 				success:false,

@@ -22,7 +22,7 @@ exports.createRating=async(req,res)=>{
                                     }
         )
 
-        console.log(courseDetails)
+      
         if(!courseDetails){
             return res.status(404).json({
                 success:false,
@@ -57,7 +57,7 @@ exports.createRating=async(req,res)=>{
                     }
                 },{new:true}
             )
-            console.log(updatedCourseDetails)
+           
         //? return response
 
         return res.status(200).json({
